@@ -13,7 +13,7 @@ puts "** Running LivelyDocs!"
 task_name = ARGV.shift
 
 t = Thread.start do 
-  while true
+  loop do
     result = `rake -s #{task_name || "rdoc"}`
     puts result unless result.strip.empty?
     sleep(1)
