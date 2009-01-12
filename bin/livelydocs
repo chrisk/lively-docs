@@ -14,7 +14,13 @@ task_name = ARGV.shift
 
 t = Thread.start do 
   loop do
-    result = `rake -s #{task_name || "rdoc"}`
+    result = `rake -s #{task_name || "rdoc"} 2>&1`
+
+    if result =~ /Don't know how to build task '#{task_name}'/
+      puts "** The '#{task_name}' task couldn't be found. To use another task: #{$0} [task]"
+      break
+    end
+
     puts result unless result.strip.empty?
     sleep(1)
   end
